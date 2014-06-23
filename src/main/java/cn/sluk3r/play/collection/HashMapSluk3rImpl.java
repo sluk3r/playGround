@@ -230,3 +230,24 @@ public class HashMapSluk3rImpl implements Map {
         }
     }
 }
+
+
+/*
+跟JDK实现对比
+1, 维护了一个size， 当有CRUD时，适时修改此值。 而不是在需要时， 再遍历地算。
+2，key的hash计算时， 又加了一层的hash方法，这个的数学原理？
+3，index计算： h & (length-1)， 这种计算跟取模的性能对比？
+4，Entry还维护了一个hash值， 有什么好处？ 细想下， 应该有这个好处：Entry链表比较时， 可先通过hash值是否相等而分段比较，而不必逐个比较。相当于tag分类。
+5，Entry里没有维护pre， remove里怎么实现？ 顺便看到了一个类LinkedHashMap， 它相对于HashMap的好处是？
+6，Entry里加了recordAccess， 这个有什么用？
+7，addEntry时，把新加入的放到头上， 而不尾部。 有什么好处？remove时方便？应该是。
+8，得加上resize的功能。
+9，threshold的作用， 新加时这样判断：size++ >= threshold， 并不是用threshold跟table的长度比。 这个是新发现。
+10. putAll比想像的要复杂些：会先考虑resize的事。 当然最核心的，还是遍历传入map再逐个放进来。
+11，remove操作， 在Entry里有个相应的recordRemoval。 这个方法跟上面的recordAccess一样，在HashMap自身的Entry是空实现。 而是在LinkedHashMap里有实现。  自己先改用新Entry时放头部的方式实现下。
+12，clear方法， 只是清空table，并没有把table也扔掉。
+13，keySet方法实现上， 有自己定义的类， 这样也好， 用一个类在CRUD时收集，而不必再遍历地取。
+14，和上面的keySet有类似的收集操作。
+15，多了newEntryIterator，newKeyIterator和newValueIterator三个实现。
+16, modCount != expectedModCount时，ConcurrentModificationException异常机制。
+ */
