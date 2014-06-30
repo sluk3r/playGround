@@ -28,7 +28,6 @@ public class LinkedHashMapDemo {
         HashMap<String, Integer> hashMap = new HashMap();
         putIntoMap(size,hashMap);
 
-
         int i = 0;
         lastValue = -1;
         for (Map.Entry<String, Integer> me: hashMap.entrySet()) {

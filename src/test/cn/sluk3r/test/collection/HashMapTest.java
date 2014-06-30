@@ -1,3 +1,5 @@
+package cn.sluk3r.test.collection;
+
 import cn.sluk3r.play.collection.HashMapSluk3rImpl;
 import junit.framework.Assert;
 import org.junit.After;

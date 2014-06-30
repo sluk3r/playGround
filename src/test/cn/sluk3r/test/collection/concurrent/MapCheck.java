@@ -1,8 +1,17 @@
 package cn.sluk3r.test.collection.concurrent;
 
 
+//import java.io.*;
+//import java.util.*;
+
 import java.io.*;
-import java.util.*;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.Hashtable;
+import java.util.Enumeration;
 
 /**
  * Created by baiing on 2014/6/20.
@@ -81,7 +90,7 @@ public class MapCheck {
         long time = System.currentTimeMillis() - startTime;
     }
 
-    static void forceMem(int n) {
+    static void forceMem(int n) { //wangxc 貌似是先通过没用的数据先把内存给撑开。
         // force enough memory
         Long[] junk = new Long[n];
         for (int i = 0; i < junk.length; ++i) junk[i] = new Long(i);
@@ -575,7 +584,7 @@ public class MapCheck {
 
     static Random rng = new Random();
 
-    static void shuffle(Object[] keys) {
+    static void shuffle(Object[] keys) { //wangxc 真的是洗牌操作， 就是想彻底打乱
         int size = keys.length;
         for (int i = size; i > 1; i--) {
             int r = rng.nextInt(i);
