@@ -16,6 +16,14 @@ public class IpCheckerTest {
 
     @Test
     public void test() {
+        String[] regex = new String[]{c.getRegexp(), "\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))\b"};
+        for(String r: regex) {
+            c.setRegexp(r);
+            testBatchly();
+        }
+    }
+
+    private void testBatchly() {
         String[] errorIps = new String[]{
                 null,
                 "198.122.211.112.",
@@ -34,7 +42,7 @@ public class IpCheckerTest {
         };
 
         for(String ip: correctIps) {
-            assertTrue(String.format("for ip[%s], should be true", ip), c.validate(ip));
+            assertTrue(String.format("for ip[%s], should be true, current regexp is [%s]", ip, c.getRegexp()), c.validate(ip));
         }
     }
 
