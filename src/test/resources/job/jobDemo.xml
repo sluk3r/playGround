@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="stat" class="cn.sluk3r.test.spring.job.JobDetail" />
+
+    <bean id="statTask"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="stat" />
+        <property name="targetMethod" value="runJob" />
+    </bean>
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="statTask" />
+        <property name="cronExpression" value="10 0/1 * * * ?" />
+    </bean>
+
+    <bean id="taskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="statTask" />
+        <property name="startDelay" value="10000" />
+        <property name="repeatInterval" value="60000" />
+    </bean>
+
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger" />
+                <ref bean="taskTrigger" />
+            </list>
+        </property>
+    </bean>
+
+</beans>
